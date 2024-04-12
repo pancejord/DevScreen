@@ -1,7 +1,5 @@
 import {pgTable, text, timestamp,primaryKey,integer } from "drizzle-orm/pg-core"
-
-
-  import type { AdapterAccount } from '@auth/core/adapters'
+import type { AdapterAccount } from '@auth/core/adapters'
 
 export const test = pgTable('testing', {
     id: text('id').notNull().primaryKey(),
@@ -57,4 +55,16 @@ export const test = pgTable('testing', {
    (vt) => ({
      compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
    })
+  )
+
+  export const room = pgTable(
+    "table", {
+        userId: text("userId")
+        .notNull()
+        .references(() => users.id, {onDelete: 'cascade'}),
+        name: text('name').notNull(),
+        language: text('language').notNull(),
+        githubRepo: text('githubRepo'),
+
+    }
   )

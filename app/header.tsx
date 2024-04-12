@@ -1,11 +1,12 @@
+'use client';
+
 import { ModeToggle } from "@/components/mode-toggle";
 import { useSession, signIn, signOut } from "next-auth/react";
-import { db } from "./db";
 import { Button } from "@/components/ui/button";
 
-export async function Header() {
+export function Header() {
 
-    const session = await useSession()
+    const session = useSession()
 
 
 
