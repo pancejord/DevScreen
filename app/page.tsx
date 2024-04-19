@@ -1,16 +1,15 @@
-import Image from "next/image";
 import { db } from "./db";
 
 export default async function Home() {
   
-  const items = await db.query.test.findMany();
+  const rooms = await db.query.room.findMany();
 
   return (
-    <div>
-      {items.map((item) => {
-        return <div key={item.id}>{item.name}</div>
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      {rooms.map((room) => {
+        return <div key={room.id}>{room.name}</div>
       })}
-    </div>
+    </main>
     
   );
 }
