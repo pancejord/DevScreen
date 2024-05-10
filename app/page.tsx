@@ -10,24 +10,35 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Room } from "./db/schema";
+import { FiGithub } from "react-icons/fi";
+import { getRooms } from "./data-access/rooms";
 
 
 export default async function Home() {
   
-  const rooms = await db.query.room.findMany();
+  const rooms = await getRooms();
 
   const RoomCard = ({room}: {room: Room}) => {
     return (
       <Card>
   <CardHeader>
     <CardTitle>{room.name}</CardTitle>
-    <CardDescription>Card Description</CardDescription>
+    <CardDescription>{room.description}</CardDescription>
   </CardHeader>
   <CardContent>
-    <p>Card Content</p>
+    {room.githubRepo && 
+    (<Button variant={'outline'}> <Link 
+    className="flex gap-2 items-center" 
+    href={room.githubRepo}
+    target="_blank"
+    rel="noopener noreferrer">
+      <FiGithub/> GitHub Repo 
+      </Link></Button> )}
   </CardContent>
   <CardFooter>
-    <p>Card Footer</p>
+    <Button variant={'secondary'} asChild>
+      <Link href={`/rooms/${room.id}`}>Join Room</Link>
+      </Button>
   </CardFooter>
 </Card>
 
@@ -40,9 +51,11 @@ export default async function Home() {
       <Button className="mr-10" asChild><Link href="/create-room">Create Room</Link></Button>
       </div>
 
+      <div className="grid grid-cols-3">
       {rooms.map((room) => {
         return <RoomCard key={room.id} room={room} />
       })}
+      </div>
 
     </main>
     
